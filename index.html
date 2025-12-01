@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>闰年判断工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .school-info {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            min-height: 30px;
+        }
+        .error {
+            color: #d8000c;
+            background-color: #ffd2d2;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="school-info">龙岗区天誉实验学校-罗桉然</div>
+        <h2>闰年判断工具</h2>
+        <input type="text" id="yearInput" placeholder="请输入年份（如：2024）">
+        <button onclick="checkLeapYear()">立即判断</button>
+        <div id="result"></div>
+        <div id="errorMsg" class="error"></div>
+    </div>
+
+    <script>
+        function checkLeapYear() {
+            const yearInput = document.getElementById('yearInput').value.trim();
+            const resultDiv = document.getElementById('result');
+            const errorMsg = document.getElementById('errorMsg');
+
+            resultDiv.innerHTML = '';
+            errorMsg.style.display = 'none';
+
+            if (!/^\d+$/.test(yearInput)) {
+                showError('请输入有效的数字年份！');
+                return;
+            }
+            const year = parseInt(yearInput, 10);
+            
+            if (year <= 0) {
+                showError('年份必须大于0！');
+                return;
+            }
+
+            const isLeap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+            
+            resultDiv.innerHTML = `
+                <strong>${year}年</strong> 
+                ${isLeap ? '是闰年' : '是平年'}
+            `;
+        }
+
+        function showError(message) {
+            const errorMsg = document.getElementById('errorMsg');
+            errorMsg.textContent = message;
+            errorMsg.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
